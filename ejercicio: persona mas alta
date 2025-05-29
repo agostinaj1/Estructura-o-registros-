@@ -1,0 +1,42 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 3
+
+// Definimos la estructura Persona
+struct Persona {
+    char nombre[50];
+    float altura;
+};
+
+int main() {
+    struct Persona personas[MAX];
+    float maxAltura = 0.0;
+    int i;
+
+    // Entrada de datos
+    for (i = 0; i < MAX; i++) {
+        printf("Persona %d:\n", i + 1);
+        printf("Nombre: ");
+        getchar(); // Limpia el buffer
+        fgets(personas[i].nombre, sizeof(personas[i].nombre), stdin);
+        personas[i].nombre[strcspn(personas[i].nombre, "\n")] = '\0'; // Quita el \n
+
+        printf("Altura: ");
+        scanf("%f", &personas[i].altura);
+
+        if (personas[i].altura > maxAltura) {
+            maxAltura = personas[i].altura;
+        }
+    }
+
+    // Mostrar la(s) persona(s) más alta(s)
+    printf("\nPersona/s más alta/s:\n");
+    for (i = 0; i < MAX; i++) {
+        if (personas[i].altura == maxAltura) {
+            printf("- %s con %.2f m\n", personas[i].nombre, personas[i].altura);
+        }
+    }
+
+    return 0;
+}
