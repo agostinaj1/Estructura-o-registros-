@@ -1,0 +1,49 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 3
+
+// Definimos la estructura Persona
+struct Persona {
+    char nombre[50];
+    char dni[20];
+};
+
+int main() {
+    struct Persona personas[MAX];
+    char nombreBuscado[50];
+    int i, encontrado = 0;
+
+    // Cargar datos de 5 personas
+    for (i = 0; i < MAX; i++) {
+        printf("Persona %d:\n", i + 1);
+        printf("Nombre: ");
+        getchar(); // Limpiar el buffer
+        fgets(personas[i].nombre, sizeof(personas[i].nombre), stdin);
+        personas[i].nombre[strcspn(personas[i].nombre, "\n")] = '\0'; // Eliminar \n
+
+        printf("DNI: ");
+        fgets(personas[i].dni, sizeof(personas[i].dni), stdin);
+        personas[i].dni[strcspn(personas[i].dni, "\n")] = '\0';
+    }
+
+    // Buscar una persona por nombre
+    printf("\nIngrese el nombre a buscar: ");
+    getchar();
+    fgets(nombreBuscado, sizeof(nombreBuscado), stdin);
+    nombreBuscado[strcspn(nombreBuscado, "\n")] = '\0';
+
+    for (i = 0; i < MAX; i++) {
+        if (strcmp(personas[i].nombre, nombreBuscado) == 0) {
+            printf("DNI de %s: %s\n", personas[i].nombre, personas[i].dni);
+            encontrado = 1;
+            break;
+        }
+    }
+
+    if (!encontrado) {
+        printf("La persona '%s' no se encuentra en el registro.\n", nombreBuscado);
+    }
+
+    return 0;
+}
